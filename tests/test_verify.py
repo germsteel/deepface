@@ -1,6 +1,7 @@
 # 3rd party dependencies
 import pytest
 import cv2
+import os
 
 # project dependencies
 from deepface import DeepFace
@@ -107,9 +108,12 @@ def test_verify_for_preloaded_image():
 
 def test_verify_for_precalculated_embeddings():
     model_name = "Facenet"
+    print(os.getcwd())
+    img1_path = "deepface\\tests\\dataset\\img1.jpg"
+    img2_path = "deepface\\tests\\dataset\\img2.jpg"
 
-    img1_path = "dataset/img1.jpg"
-    img2_path = "dataset/img2.jpg"
+    img1_path = os.path.join(os.getcwd(), img1_path)
+    img2_path = os.path.join(os.getcwd(), img2_path)
 
     img1_embedding = DeepFace.represent(img_path=img1_path, model_name=model_name)[0]["embedding"]
     img2_embedding = DeepFace.represent(img_path=img2_path, model_name=model_name)[0]["embedding"]
@@ -188,3 +192,5 @@ def test_verify_for_nested_embeddings():
         _ = DeepFace.verify(img1_path=img1_embeddings, img2_path=img2_path)
 
     logger.info("✅ test verify for nested embeddings is done")
+
+test_verify_for_precalculated_embeddings()
